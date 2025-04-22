@@ -13,55 +13,98 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function Header() {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   return (
-    <div className="flex justify-between items-center p-3 max-w-6xl mx-auto">
-      <ul className="flex gap-4">
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-        <SignedOut>
-          <Link href={"/sign-in"}>Sign in</Link>
-        </SignedOut>
-        <li className="hidden sm:block">
-          <Link href={"/"}>Home</Link>
-        </li>
-        <li className="hidden sm:block">
-          <Link href={"/favorites"}>Favorites</Link>
-        </li>
-        <li className="hidden sm:block">
-          <Link href={"/about"}>About</Link>
-        </li>
-      </ul>
-      <div className="flex gap-5">
-        <Link href={"/"} className="flex gap-1 items-center">
-          <span className="text-2xl font-bold bg-amber-500 py-1 px-2 rounded-lg">
-            IMDb
-          </span>
-          <span className="text-xl hidden sm:inline">Clone</span>
-        </Link>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon">
-              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setTheme("light")}>
-              Light
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("dark")}>
-              Dark
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("system")}>
-              System
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center justify-between">
+        <div className="flex items-center gap-6">
+          <Link href={"/"} className="flex items-center gap-2">
+            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white py-1 px-3 rounded-lg shadow-lg">
+              IMDb
+            </span>
+            <span className="text-xl font-semibold hidden sm:inline">
+              Clone
+            </span>
+          </Link>
+          <nav className="hidden md:flex items-center gap-6">
+            <Link
+              href={"/"}
+              className="text-sm font-medium transition-colors hover:text-primary"
+            >
+              Home
+            </Link>
+            <Link
+              href={"/favorites"}
+              className="text-sm font-medium transition-colors hover:text-primary"
+            >
+              Favorites
+            </Link>
+            <Link
+              href={"/about"}
+              className="text-sm font-medium transition-colors hover:text-primary"
+            >
+              About
+            </Link>
+          </nav>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <SignedIn>
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: "w-9 h-9",
+                },
+              }}
+            />
+          </SignedIn>
+          <SignedOut>
+            <Link
+              href={"/sign-in"}
+              className="text-sm font-medium transition-colors hover:text-primary"
+            >
+              Sign in
+            </Link>
+          </SignedOut>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-9 w-9 rounded-full border-2"
+              >
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-[140px]">
+              <DropdownMenuItem
+                onClick={() => setTheme("light")}
+                className="cursor-pointer"
+              >
+                <Sun className="mr-2 h-4 w-4" />
+                <span>Light</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => setTheme("dark")}
+                className="cursor-pointer"
+              >
+                <Moon className="mr-2 h-4 w-4" />
+                <span>Dark</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => setTheme("system")}
+                className="cursor-pointer"
+              >
+                <span>System</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
-    </div>
+    </header>
   );
 }

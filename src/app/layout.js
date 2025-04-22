@@ -26,12 +26,13 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <head />
-        <body>
+        <body className={`${geistSans.variable} ${geistMono.variable}`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
+            enableSystem={true}
+            disableTransitionOnChange={false}
+            storageKey="imdb-clone-theme"
           >
             <Header />
             <Navbar />
