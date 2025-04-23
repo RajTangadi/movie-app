@@ -1,15 +1,21 @@
+/* eslint-disable @next/next/no-async-client-component */
+"use client";
 import Results from "@/components/Results";
+import { useState } from "react";
 const API_KEY = process.env.API_KEY;
 export default async function Home() {
+  const [isLoading, setIsLoading] = useState(true);
   const res = await fetch(
     `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}&language=en-US&page=1`
   );
   const data = await res.json();
   if (!res.ok) {
     throw new Error("Failed to fetch data");
+    setIsLoading(false)
   }
   const results = data.results;
   let homePageContent = null;
+  setIsLoading(false)
    try {
      const results = await fetch(process.env.URL + '/api/homepagecontent/get', {
        method: 'POST',
@@ -32,7 +38,7 @@ export default async function Home() {
      }
    } catch (error) {
      console.log('Error getting the home page content', error);
-   }
+   } 
  
   return (
     <div>
@@ -48,7 +54,7 @@ export default async function Home() {
          </div>
        )}
        <div>
-         <Results results={results} />
+         <Results results={results} isLoading={isLoading} />
        </div>
      </div>
    );
